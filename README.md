@@ -24,3 +24,7 @@ Previous jokes and reactions to jokes are stored in the current session. The pag
 ## Screenshot
 
 ![Screenshot](https://github.com/ParfenovIgor/chuck/blob/master/screenshots/screenshot01.jpg)
+
+## Build
+
+App build for Android: [apk](https://github.com/ParfenovIgor/chuck/blob/master/build/app/outputs/apk/release/app-release.apk)
