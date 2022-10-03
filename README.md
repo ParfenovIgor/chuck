@@ -19,7 +19,7 @@ The only screen contains swiping pages. Each page contains joke, which is downlo
 * Load current joke page in browser
 * Copy current joke to clipboard
 
-Previous jokes and reactions on jokes are stored in current session. The pages are swipable in both directions.
+Previous jokes and reactions to jokes are stored in the current session. The pages are swipeable in both directions.
 
 ## Screenshot
 
