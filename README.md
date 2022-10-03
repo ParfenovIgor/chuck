@@ -1,16 +1,26 @@
-# chuck
+# Tinder with Chuck Norris
 
-A new Flutter project.
+![Screenshot](https://github.com/ParfenovIgor/chuck/blob/master/assets/images/top_picture.png)
 
-## Getting Started
+Flutter project for course [F22] CPMDWithF.
 
-This project is a starting point for a Flutter application.
+## Author
 
-A few resources to get you started if this is your first Flutter project:
+Igor Parfenov
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Contact: [@Igor_Parfenov](https://t.me/Igor_Parfenov)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Overview
+
+The only screen contains swiping pages. Each page contains joke, which is downloaded from [chucknorris.io](https://api.chucknorris.io). At the bottom there are four buttons:
+
+* Set *like* reaction to current joke and swipe to next one
+* Set *dislike* reaction to current joke and swipe to next one
+* Load current joke page in browser
+* Copy current joke to clipboard
+
+Previous jokes and reactions on jokes are stored in current session. The pages are swipable in both directions.
+
+## Screenshot
+
+![Screenshot](https://github.com/ParfenovIgor/chuck/blob/master/screenshots/screenshot01.jpg)
