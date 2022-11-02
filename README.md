@@ -1,6 +1,6 @@
 # Tinder with Chuck Norris
 
-![Screenshot](https://github.com/ParfenovIgor/chuck/blob/master/assets/images/top_picture.png)
+![Screenshot](./assets/images/chuck_orange.png)
 
 Flutter project for course [F22] CPMDWithF.
 
