@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "709046596518",
+    "project_id": "chuck-firebase",
+    "storage_bucket": "chuck-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709046596518:android:189f21adf4e01ec370d567",
+        "android_client_info": {
+          "package_name": "com.example.chuck"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "709046596518-nnhtgi8gcnh1tlds3fghp90tcv52v3h3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo0HOgH0dW8VsJF-9NK6CScAXtxWSEH58"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "709046596518-nnhtgi8gcnh1tlds3fghp90tcv52v3h3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "709046596518-2k98afj4a3c2lind8u5giehmghpnhkcm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.chuck"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,163 +1,49 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'utilities/firebase/firebase_options.dart';
 
-import 'joke.dart';
-import 'joke_controller.dart';
+import 'models/joke/joke.dart';
+import 'models/custom_error/custom_error.dart';
+import 'models/tab/tab.dart';
+import 'models/reaction/reaction.dart';
+import 'pages/menu/menu_page.dart';
 
-void main() {
-  runApp(const App());
+void main() async {
+  runZonedGuarded<Future<void>>(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+
+    await Hive.initFlutter();
+    Hive
+      ..registerAdapter(ReactionAdapter())
+      ..registerAdapter(JokeAdapter());
+    runApp(const ProviderScope(child: App()));
+  }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
 }
 
-class App extends StatelessWidget {
+class App extends ConsumerWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final tab = ref.watch(tabProvider);
     return MaterialApp(
-      title: 'Example Program',
-      theme: ThemeData(
-        primarySwatch: Colors.deepOrange,
-      ),
-      home: const HomePage(title: 'Tinder with Chuck Norris'),
-    );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final JokeController _jokeController = JokeController();
-  late PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(
-        initialPage:
-            1000000, // PageView does not support negative indexes. So instead used huge offset.
-        viewportFraction: 0.8);
-  }
-
-  void _onButtonLike() {
-    setState(() {
-      _jokeController.jokes[_pageController.page!.round()]
-          ?.then((joke) => joke.reaction = Reaction.like);
-      _pageController.animateToPage(_pageController.page!.round() + 1,
-          duration: const Duration(seconds: 1), curve: Curves.elasticInOut);
-    });
-  }
-
-  void _onButtonBrowser() async {
-    Joke? joke = await _jokeController.jokes[_pageController.page!.round()];
-    String? id = joke?.id;
-    String url;
-    if (id != null) {
-      url = 'https://api.chucknorris.io/jokes/$id';
-    } else {
-      url = 'https://api.chucknorris.io';
-    }
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
-    }
-  }
-
-  void _onButtonCopy() async {
-    var joke = await _jokeController.jokes[_pageController.page!.round()];
-    await Clipboard.setData(ClipboardData(text: joke!.text));
-  }
-
-  void _onButtonDislike() {
-    setState(() {
-      _jokeController.jokes[_pageController.page!.round()]
-          ?.then((joke) => joke.reaction = Reaction.dislike);
-      _pageController.animateToPage(_pageController.page!.round() + 1,
-          duration: const Duration(seconds: 1), curve: Curves.elasticInOut);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              SizedBox(
-                height: 200,
-                width: 200,
-                child: Image.asset('assets/images/top_picture.png'),
-              ),
-              PageView.builder(
-                controller: _pageController,
-                itemBuilder: (context, i) {
-                  return FutureBuilder<Joke>(
-                    future: _jokeController.getJoke(i),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Column(
-                          children: <Widget>[
-                            SizedBox(
-                              height: 400,
-                              child: Text(
-                                snapshot.data!.text,
-                                style: Theme.of(context).textTheme.headline6,
-                              ),
-                            ),
-                            Text(
-                              'Id: ${snapshot.data!.id}',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            snapshot.data!.reaction == Reaction.like
-                                ? const Icon(Icons.thumb_up)
-                                : snapshot.data!.reaction == Reaction.dislike
-                                    ? const Icon(Icons.thumb_down)
-                                    : const SizedBox.shrink(),
-                          ],
-                        );
-                      } else if (snapshot.hasError) {
-                        return Text('${snapshot.error}');
-                      }
-                      return const CircularProgressIndicator();
-                    },
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar:
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-        ElevatedButton(
-          onPressed: _onButtonLike,
-          child: const Icon(Icons.thumb_up),
-        ),
-        ElevatedButton(
-          onPressed: _onButtonBrowser,
-          child: const Icon(Icons.open_in_browser_outlined),
-        ),
-        ElevatedButton(
-          onPressed: _onButtonCopy,
-          child: const Icon(Icons.copy),
-        ),
-        ElevatedButton(
-          onPressed: _onButtonDislike,
-          child: const Icon(Icons.thumb_down),
-        ),
-      ]),
-    ));
+        title: 'Tinder with Chuck Norris',
+        theme: ThemeData(primarySwatch: tabColor(tab)),
+        builder: (BuildContext context, Widget? widget) {
+          ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
+            return CustomError(errorDetails: errorDetails);
+          };
+          return widget!;
+        },
+        home: const SafeArea(child: MenuPage()));
   }
 }
