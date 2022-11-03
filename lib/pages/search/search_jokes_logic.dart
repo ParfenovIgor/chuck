@@ -8,7 +8,15 @@ class SearchJokesLogic {
     jokes = Fetcher.fetchSearchJokes(searchQuery);
   }
 
-  static Future<List<Joke>> getList() async {
-    return jokes;
+  static Future<Joke> getJoke(int n) async {
+    late Joke joke;
+    await jokes.then((list) {
+      if (n < list.length) {
+        joke = list[n];
+      } else {
+        joke = endOfListJoke();
+      }
+    });
+    return joke;
   }
 }

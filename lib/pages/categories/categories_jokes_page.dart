@@ -59,13 +59,15 @@ class CategoriesJokesPageState extends ConsumerState<CategoriesJokesPage> {
     Joke? joke =
         await CategoriesJokesLogic.getJoke(pageController.page!.round());
     if (!mounted) return;
-    if (SavedJokesLogic.addJoke(joke)) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("The joke is saved")));
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("This joke is already saved")));
-    }
+    await SavedJokesLogic.addJoke(joke).then((n) {
+      if (n) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("The joke is saved")));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("This joke is already saved")));
+      }
+    });
   }
 
   void _onButtonBack() {

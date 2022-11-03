@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,6 +49,12 @@ class SavedJokesPageState extends ConsumerState<SavedJokesPage> {
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
     }
+  }
+
+  void _onButtonDelete() {
+    setState(() {
+      SavedJokesLogic.deleteJoke(pageController.page!.round());
+    });
   }
 
   void _onButtonBack() {
@@ -144,6 +151,10 @@ class SavedJokesPageState extends ConsumerState<SavedJokesPage> {
                   ElevatedButton(
                     onPressed: _onButtonBrowser,
                     child: const Icon(Icons.open_in_browser_outlined),
+                  ),
+                  ElevatedButton(
+                    onPressed: _onButtonDelete,
+                    child: const Icon(Icons.delete),
                   ),
                   ElevatedButton(
                     onPressed: _onButtonBack,

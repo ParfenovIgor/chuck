@@ -2,44 +2,68 @@ import '../../models/joke/joke.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class SavedJokesLogic {
-  static List<Joke> jokes = [];
+  static late Future<List<Joke>> jokes;
 
   static void fetch() async {
-    var box = await Hive.openBox<List>('jokes');
-    jokes = box.get('list', defaultValue: <Joke>[])!.cast<Joke>();
+    jokes = () async {
+      var box = await Hive.openBox<List>('jokes');
+      return box.get('list', defaultValue: <Joke>[])!.cast<Joke>();
+    }();
   }
 
   static void store() async {
     var box = await Hive.openBox<List>('jokes');
-    box.put('list', jokes);
+    await jokes.then((list) {
+      box.put('list', list);
+    });
   }
 
-  static Future<Joke> getJoke(int n) {
-    if (n < jokes.length) {
-      return Future<Joke>.value(jokes[n]);
-    } else {
-      return Future<Joke>.value(endOfListJoke());
-    }
-  }
-
-  static bool addJoke(Joke joke) {
-    bool result = true;
-    for (Joke joke2 in jokes) {
-      if (joke.id == joke2.id) {
-        joke2 = joke;
-        result = false;
+  static Future<Joke> getJoke(int n) async {
+    late Joke joke;
+    await jokes.then((list) {
+      if (n < list.length) {
+        joke = list[n];
+      } else {
+        joke = endOfListJoke();
       }
-    }
-    if (result) {
-      jokes.add(joke);
-    }
-    store();
+    });
+    return joke;
+  }
+
+  static Future<bool> addJoke(Joke joke) async {
+    bool result = true;
+    await jokes.then((list) {
+      for (Joke joke2 in list) {
+        if (joke.id == joke2.id) {
+          joke2 = joke;
+          result = false;
+        }
+      }
+      if (result) {
+        list.add(joke);
+        store();
+      }
+    });
     return result;
+  }
+
+  static void deleteJoke(int n) async {
+    await jokes.then((list) {
+      if (n < list.length) {
+        for (int i = n; i + 1 < list.length; i++) {
+          list[i] = list[i + 1];
+        }
+        list.removeLast();
+        store();
+      }
+    });
   }
 
   static void delete() async {
     var box = await Hive.openBox<List>('jokes');
     box.clear();
-    jokes.clear();
+    await jokes.then((list) {
+      list.clear();
+    });
   }
 }

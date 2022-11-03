@@ -33,8 +33,8 @@ class SearchJokesPageState extends ConsumerState<SearchJokesPage> {
 
   void _onButtonLike() {
     setState(() {
-      SearchJokesLogic.getList().then((list) =>
-          list[pageController.page!.round()].reaction = Reaction.like);
+      SearchJokesLogic.getJoke(pageController.page!.round())
+          .then((joke) => joke.reaction = Reaction.like);
       SavedJokesLogic.store();
       pageController.animateToPage(pageController.page!.round() + 1,
           duration: const Duration(seconds: 1), curve: Curves.elasticInOut);
@@ -42,9 +42,7 @@ class SearchJokesPageState extends ConsumerState<SearchJokesPage> {
   }
 
   void _onButtonBrowser() async {
-    late Joke joke;
-    await SearchJokesLogic.getList()
-        .then((list) => joke = list[pageController.page!.round()]);
+    Joke? joke = await SearchJokesLogic.getJoke(pageController.page!.round());
     String? id = joke.id;
     String url = 'https://api.chucknorris.io/jokes/$id';
     if (await canLaunchUrl(Uri.parse(url))) {
@@ -53,17 +51,17 @@ class SearchJokesPageState extends ConsumerState<SearchJokesPage> {
   }
 
   void _onButtonSave() async {
-    late Joke joke;
-    await SearchJokesLogic.getList()
-        .then((list) => joke = list[pageController.page!.round()]);
+    Joke? joke = await SearchJokesLogic.getJoke(pageController.page!.round());
     if (!mounted) return;
-    if (SavedJokesLogic.addJoke(joke)) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("The joke is saved")));
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("This joke is already saved")));
-    }
+    await SavedJokesLogic.addJoke(joke).then((n) {
+      if (n) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("The joke is saved")));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("This joke is already saved")));
+      }
+    });
   }
 
   void _onButtonBack() {
@@ -71,16 +69,14 @@ class SearchJokesPageState extends ConsumerState<SearchJokesPage> {
   }
 
   void _onButtonCopy() async {
-    late Joke joke;
-    await SearchJokesLogic.getList()
-        .then((list) => joke = list[pageController.page!.round()]);
+    Joke joke = await SearchJokesLogic.getJoke(pageController.page!.round());
     await Clipboard.setData(ClipboardData(text: joke.text));
   }
 
   void _onButtonDislike() {
     setState(() {
-      SearchJokesLogic.getList().then((list) =>
-          list[pageController.page!.round()].reaction = Reaction.dislike);
+      SearchJokesLogic.getJoke(pageController.page!.round())
+          .then((joke) => joke.reaction = Reaction.dislike);
       SavedJokesLogic.store();
       pageController.animateToPage(pageController.page!.round() + 1,
           duration: const Duration(seconds: 1), curve: Curves.elasticInOut);
@@ -110,26 +106,20 @@ class SearchJokesPageState extends ConsumerState<SearchJokesPage> {
                     child: PageView.builder(
                       controller: pageController,
                       itemBuilder: (context, i) {
-                        return FutureBuilder<List<Joke>>(
-                          future: SearchJokesLogic.getList(),
+                        return FutureBuilder<Joke>(
+                          future: SearchJokesLogic.getJoke(i),
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
-                              Joke joke;
-                              if (i < snapshot.data!.length) {
-                                joke = snapshot.data![i];
-                              } else {
-                                joke = endOfListJoke();
-                              }
                               return Column(
                                 children: <Widget>[
                                   Text(
-                                    'Id: ${joke.id}',
+                                    'Id: ${snapshot.data!.id}',
                                     style:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
-                                  reactionToIcon(joke.reaction),
+                                  reactionToIcon(snapshot.data!.reaction),
                                   Text(
-                                    joke.text,
+                                    snapshot.data!.text,
                                     style:
                                         Theme.of(context).textTheme.headline6,
                                   ),
