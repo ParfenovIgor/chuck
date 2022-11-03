@@ -4,33 +4,33 @@
 
 ### Menu
 
-![Screenshot](./screenshots/screenshot01.jpg)
+![Screenshot](./screenshot01.jpg)
 
 ### Random Jokes
 
-![Screenshot](./screenshots/screenshot02.jpg)
+![Screenshot](./screenshot02.jpg)
 
 ### Saved Jokes
 
-![Screenshot](./screenshots/screenshot03.jpg)
+![Screenshot](./screenshot03.jpg)
 
 ### Search Jokes
 
-![Screenshot](./screenshots/screenshot04.jpg)
-![Screenshot](./screenshots/screenshot05.jpg)
+![Screenshot](./screenshot04.jpg)
+![Screenshot](./screenshot05.jpg)
 
 ### Jokes Categories
 
-![Screenshot](./screenshots/screenshot06.jpg)
+![Screenshot](./screenshot06.jpg)
 
-![Screenshot](./screenshots/screenshot07.jpg)
+![Screenshot](./screenshot07.jpg)
 
 ### Delete Jokes Alert Dialog
 
-![Screenshot](./screenshots/screenshot08.jpg)
+![Screenshot](./screenshot08.jpg)
 
 ## Firebase Crashlytics
 
-![Screenshot](./screenshots/screenshot09.jpg)
-![Screenshot](./screenshots/screenshot10.jpg)
-![Screenshot](./screenshots/screenshot11.jpg)
+![Screenshot](./screenshot09.jpg)
+![Screenshot](./screenshot10.jpg)
+![Screenshot](./screenshot11.jpg)
