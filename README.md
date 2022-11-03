@@ -12,19 +12,36 @@ Contact: [@Igor_Parfenov](https://t.me/Igor_Parfenov)
 
 ## Overview
 
-The only screen contains swiping pages. Each page contains joke, which is downloaded from [chucknorris.io](https://api.chucknorris.io). At the bottom there are four buttons:
+There are five screens:
 
-* Set *like* reaction to current joke and swipe to next one
-* Set *dislike* reaction to current joke and swipe to next one
-* Load current joke page in browser
-* Copy current joke to clipboard
+* `Menu` - contains buttons opening other screens
+* `Random Jokes` - loads random jokes.
+* `Saved Jokes` - loads locally saved jokes.
+* `Search Jokes` - contains two pages, the first one asks text input, the other shows result of search the specified input.
+* `Jokes Categories` - contains two pages, the first one loads categories (a.k.a. tags), the other shows random jokes with specified category.
 
-Previous jokes and reactions to jokes are stored in the current session. The pages are swipeable in both directions.
+Each screen contains six buttons:
+
+* `Like`
+* `Dislike`
+* `Open in browser`
+* `Copy text to clipboard`
+* `Save the joke` for all screens except `Saved Jokes`, and `Delete the joke` for screen `Saved Jokes`
+* `Back`
+
+## Instruments
+
+* For storage `Hive` was used
+* For dependence management `Riverpod` was used (however, the only thing it does is changing theme)
+* `Firebase Crashlytics` was used
+* Custom error widget was written
 
 ## Screenshot
 
-![Screenshot](https://github.com/ParfenovIgor/chuck/blob/master/screenshots/screenshot01.jpg)
+![Screenshot](./screenshots/screenshot01.jpg)
+
+[More Screenshots](./screenshots/README.md)
 
 ## Build
 
-App build for Android: [apk](https://github.com/ParfenovIgor/chuck/blob/master/build/app/outputs/apk/release/app-release.apk)
+App build for Android: [apk](./build/app/outputs/apk/release/app-release.apk)
