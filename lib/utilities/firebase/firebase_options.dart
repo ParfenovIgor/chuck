@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '709046596518',
     projectId: 'chuck-firebase',
     storageBucket: 'chuck-firebase.appspot.com',
-    iosClientId: '709046596518-2k98afj4a3c2lind8u5giehmghpnhkcm.apps.googleusercontent.com',
+    iosClientId:
+        '709046596518-2k98afj4a3c2lind8u5giehmghpnhkcm.apps.googleusercontent.com',
     iosBundleId: 'com.example.chuck',
   );
 
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '709046596518',
     projectId: 'chuck-firebase',
     storageBucket: 'chuck-firebase.appspot.com',
-    iosClientId: '709046596518-2k98afj4a3c2lind8u5giehmghpnhkcm.apps.googleusercontent.com',
+    iosClientId:
+        '709046596518-2k98afj4a3c2lind8u5giehmghpnhkcm.apps.googleusercontent.com',
     iosBundleId: 'com.example.chuck',
   );
 }
