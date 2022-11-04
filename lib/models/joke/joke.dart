@@ -1,7 +1,7 @@
-import '../joke_json/joke_json.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../reaction/reaction.dart';
+import 'package:chuck/models/joke_json/joke_json.dart';
+import 'package:chuck/models/reaction/reaction.dart';
 
 part 'joke.g.dart';
 

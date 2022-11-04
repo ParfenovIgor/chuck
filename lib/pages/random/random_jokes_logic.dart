@@ -1,5 +1,5 @@
-import '../../models/joke/joke.dart';
-import '../../models/fetcher/fetcher.dart';
+import 'package:chuck/models/fetcher/fetcher.dart';
+import 'package:chuck/models/joke/joke.dart';
 
 class RandomJokesLogic {
   static final Map<int, Future<Joke>> jokes = {};

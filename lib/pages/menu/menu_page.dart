@@ -1,12 +1,12 @@
-import 'package:chuck/pages/saved/saved_jokes_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../random/random_jokes_page.dart';
-import '../saved/saved_jokes_page.dart';
-import '../search_textfield/search_jokes_textfield_page.dart';
-import '../categories_list/categories_jokes_list_page.dart';
-import '../../models/tab/tab.dart';
+import 'package:chuck/models/tab/tab.dart';
+import 'package:chuck/pages/random/random_jokes_page.dart';
+import 'package:chuck/pages/saved/saved_jokes_page.dart';
+import 'package:chuck/pages/saved/saved_jokes_logic.dart';
+import 'package:chuck/pages/search_textfield/search_jokes_textfield_page.dart';
+import 'package:chuck/pages/categories_list/categories_jokes_list_page.dart';
 
 class MenuPage extends ConsumerWidget {
   const MenuPage({super.key});

@@ -1,12 +1,12 @@
-import 'package:chuck/models/reaction/reaction.dart';
-import 'package:chuck/pages/saved/saved_jokes_logic.dart';
-import 'package:chuck/pages/search/search_jokes_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../models/joke/joke.dart';
+import 'package:chuck/models/joke/joke.dart';
+import 'package:chuck/models/reaction/reaction.dart';
+import 'package:chuck/pages/saved/saved_jokes_logic.dart';
+import 'package:chuck/pages/search/search_jokes_logic.dart';
 
 class SearchJokesPage extends ConsumerStatefulWidget {
   final String searchQuery;
@@ -100,17 +100,16 @@ class SearchJokesPageState extends ConsumerState<SearchJokesPage> {
               ),
               Expanded(
                 flex: 4,
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: SizedBox(
-                    child: PageView.builder(
-                      controller: pageController,
-                      itemBuilder: (context, i) {
-                        return FutureBuilder<Joke>(
-                          future: SearchJokesLogic.getJoke(i),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              return Column(
+                child: PageView.builder(
+                  controller: pageController,
+                  itemBuilder: (context, i) {
+                    return FutureBuilder<Joke>(
+                      future: SearchJokesLogic.getJoke(i),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
                                 children: <Widget>[
                                   Text(
                                     'Id: ${snapshot.data!.id}',
@@ -124,24 +123,22 @@ class SearchJokesPageState extends ConsumerState<SearchJokesPage> {
                                         Theme.of(context).textTheme.headline6,
                                   ),
                                 ],
-                              );
-                            } else if (snapshot.hasError) {
-                              return Text(
-                                "Could not download joke: Chuck Norris had stolen your data packets",
-                                style: Theme.of(context).textTheme.headline6,
-                              );
-                            }
-                            return const Center(
-                                child: SizedBox(
-                              width: 32,
-                              height: 32,
-                              child: CircularProgressIndicator(),
-                            ));
-                          },
-                        );
+                              ));
+                        } else if (snapshot.hasError) {
+                          return Text(
+                            "Could not download joke: Chuck Norris had stolen your data packets",
+                            style: Theme.of(context).textTheme.headline6,
+                          );
+                        }
+                        return const Center(
+                            child: SizedBox(
+                          width: 32,
+                          height: 32,
+                          child: CircularProgressIndicator(),
+                        ));
                       },
-                    ),
-                  ),
+                    );
+                  },
                 ),
               ),
             ])),

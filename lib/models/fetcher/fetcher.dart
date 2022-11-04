@@ -1,8 +1,9 @@
 import 'dart:io';
 import 'dart:convert';
-import '../joke_json/joke_json.dart';
 import 'package:http/http.dart' as http;
-import '../joke/joke.dart';
+
+import 'package:chuck/models/joke/joke.dart';
+import 'package:chuck/models/joke_json/joke_json.dart';
 
 class Fetcher {
   static Future<Joke> fetchJoke() async {

@@ -1,5 +1,6 @@
-import '../../models/joke/joke.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
+import 'package:chuck/models/joke/joke.dart';
 
 class SavedJokesLogic {
   static late Future<List<Joke>> jokes;

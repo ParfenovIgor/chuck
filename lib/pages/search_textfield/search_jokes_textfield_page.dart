@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../models/tab/tab.dart';
-import '../search/search_jokes_page.dart';
+import 'package:chuck/models/tab/tab.dart';
+import 'package:chuck/pages/search/search_jokes_page.dart';
 
 class SearchJokesTextfieldPage extends ConsumerStatefulWidget {
   const SearchJokesTextfieldPage({super.key});

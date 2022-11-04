@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../models/tab/tab.dart';
-import '../../models/fetcher/fetcher.dart';
-import '../categories/categories_jokes_page.dart';
+import 'package:chuck/models/fetcher/fetcher.dart';
+import 'package:chuck/models/tab/tab.dart';
+import 'package:chuck/pages/categories/categories_jokes_page.dart';
 
 class CategoriesJokesListPage extends ConsumerStatefulWidget {
   const CategoriesJokesListPage({super.key});
