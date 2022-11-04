@@ -21,9 +21,7 @@ class MenuPage extends ConsumerWidget {
           flex: 1,
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: SizedBox(
-              child: Image.asset('assets/images/chuck_orange.png'),
-            ),
+            child: Image.asset('assets/images/chuck_orange.png'),
           ),
         ),
         Expanded(

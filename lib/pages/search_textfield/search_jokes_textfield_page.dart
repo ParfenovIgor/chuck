@@ -58,9 +58,7 @@ class SearchJokesTextfieldPageState
               flex: 1,
               child: Padding(
                 padding: const EdgeInsets.all(16),
-                child: SizedBox(
-                  child: Image.asset('assets/images/chuck_yellow.png'),
-                ),
+                child: Image.asset('assets/images/chuck_yellow.png'),
               ),
             ),
             Expanded(
